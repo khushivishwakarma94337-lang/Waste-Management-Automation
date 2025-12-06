@@ -2,6 +2,9 @@ body{
     background-image: url(image2.jpeg);
     background-repeat: no-repeat;
     background-size: cover;
+    position: sticky;
+    flex:1;
+    overflow-y:auto;
     
 }
 *{
@@ -131,4 +134,15 @@ h1{
 }
 #title{
  color: black !important;
+}
+footer {
+  background: rgba(0, 128, 0, 0.8); 
+  color: white;
+  text-align: center;
+  padding: 15px;
+  width: 100%;
+  position: fixed;   
+  bottom: 0;
+  left: 0;
+  z-index: 100;     
 }

@@ -1,41 +1,65 @@
-const express=require("express");
-const app=express();
+const express = require("express");
+const app = express();
 app.use(express.static("public"));
-const port=3000;
-let Query=[];
-let nextid=0;
-app.use(express.urlencoded({extended:true}));
-app.set("view engine","ejs");
+const port = 3000;
 
-app.get("/form",(req,res)=>{
-    res.render("index.ejs");
+app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
 
+// ARRAYS MUST BE ABOVE ALL ROUTES
+let users = [];
+let complaints = [];
+let workers = [
+  { name: "ram" },
+  { name: "Aman" },
+  { name: "sita" }
+];
+
+// FORM PAGE
+app.get("/form", (req, res) => {
+  res.render("index.ejs");
 });
 
-app.post("/request",(req,res)=>{
-    let{name,location}=req.body;
-    Query.push({id:nextid++,
-        name:name,
-        location:location,
-        });
-    
-
+// ADMIN PANEL
+app.get("/admin", (req, res) => {
+  res.render("admin.ejs", { complaints });
 });
-app.get("/home/complaint",(req,res)=>{
-    res.render("complaint.ejs");
-    
-    
+
+// ADD USER
+app.post("/addUser", (req, res) => {
+  users.push({
+    name: req.body.name,
+    location: req.body.location
+  });
+  res.redirect("http://127.0.0.1:5500/Waste-Management-Automation/public/index.html");
 });
-app.post("/add",(req,res)=>{    
-    let {username,query}=req.body;
 
-
-    query=Query.find((p)=> username===p.username);
-
-    Query.push({query});
-    res.render("dashboard.ejs",{Query});
-
+// ADD COMPLAINT
+app.post("/addComplaint", (req, res) => {
+  complaints.push({
+    name: req.body.name,     // <<< FIXED
+    query: req.body.query
+  });
+  res.redirect("http://127.0.0.1:5500/Waste-Management-Automation/public/index.html");
 });
-app.listen(port,()=>{
- console.log("isten");
+
+// DASHBOARD
+app.get("/dashboard", (req, res) => {
+  res.render("dashboard", { users, complaints });
+});
+
+// COMPLAINT FORM PAGE
+app.get("/home/complaint", (req, res) => {
+  res.render("complaint.ejs");
+});
+
+// WORKERS PAGE
+app.get("/workers", (req, res) => {
+  res.render("worker.ejs", { workers });
+});
+app.get("/contact",(req,res)=>{
+    res.render("contact.ejs")
+});
+app.listen(port, () => {
+  console.log("Server running on", port);
 });
