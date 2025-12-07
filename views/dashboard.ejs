@@ -92,12 +92,13 @@
 
   <% complaints.forEach(c => { %>
     <tr>
-      <td><%= c.msg %></td>
+        <td><%= c.name %></td>
+      <td><%= c.query %></td>
     </tr>
   <% }) %>
 </table>
 
-<a href="/forms">Add More Data</a>
+<a href="/">Add More Data</a>
 
 </body>
 </html>

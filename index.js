@@ -37,13 +37,13 @@ app.post("/addUser", (req, res) => {
 // ADD COMPLAINT
 app.post("/addComplaint", (req, res) => {
   complaints.push({
-    name: req.body.name,     // <<< FIXED
+    name: req.body.name,     
     query: req.body.query
   });
   res.redirect("http://127.0.0.1:5500/Waste-Management-Automation/public/index.html");
 });
 
-// DASHBOARD
+
 app.get("/dashboard", (req, res) => {
   res.render("dashboard", { users, complaints });
 });
